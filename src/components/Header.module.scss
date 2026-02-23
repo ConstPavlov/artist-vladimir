@@ -1,0 +1,71 @@
+@use '../styles/variables' as *;
+
+.header {
+  background: $color-bg-elevated;
+  border-bottom: 1px solid $color-border;
+  border-radius: 0 0 $radius-lg $radius-lg;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $space-md $space-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-xl;
+}
+
+.logo {
+  font-family: $font-heading;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: $color-text !important;
+
+  &:hover {
+    color: $color-accent !important;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-wrap: wrap;
+}
+
+.link {
+  padding: $space-sm $space-md;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: $color-text-muted !important;
+  border-radius: $radius-sm;
+  transition: color $transition, background $transition;
+
+  &:hover {
+    color: $color-text !important;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  &.linkActive {
+    color: $color-accent !important;
+    background: rgba(201, 169, 98, 0.1);
+  }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .nav {
+    justify-content: center;
+  }
+}

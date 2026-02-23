@@ -1,0 +1,130 @@
+@use '../styles/variables' as *;
+
+// Обёртка на всю ширину экрана для bokeh (breakout из паддингов main)
+.aboutPage {
+  position: relative;
+  min-height: 70vh;
+  // На мобильных: компенсируем паддинг main ($space-md), чтобы блок был во всю ширину экрана
+  margin-left: -$space-md;
+  margin-right: -$space-md;
+  width: calc(100% + #{$space-md * 2});
+  @media (min-width: 641px) {
+    margin-left: -$space-lg;
+    margin-right: -$space-lg;
+    width: calc(100% + #{$space-lg * 2});
+  }
+}
+
+// Слой с bokeh на всю страницу «О художнике»
+.bokehFullPage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.page {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  z-index: 1;
+  // На мобильных — боковые отступы, чтобы текст не прилипал к краям и не съезжал
+  padding-left: $space-md;
+  padding-right: $space-md;
+  box-sizing: border-box;
+  min-width: 0;
+  @media (min-width: 641px) {
+    padding-left: $space-lg;
+    padding-right: $space-lg;
+  }
+}
+
+.pageContent {
+  position: relative;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.header {
+  margin-bottom: $space-2xl;
+  padding-bottom: $space-xl;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  font-family: $font-heading;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  color: $color-text;
+  margin: 0 0 $space-sm;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.content {
+  display: grid;
+  gap: $space-2xl;
+  min-width: 0;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 280px;
+    align-items: start;
+  }
+}
+
+.block {
+  min-width: 0;
+}
+
+.lead {
+  font-family: $font-heading;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: $color-text;
+  line-height: 1.5;
+  margin: 0 0 $space-lg;
+  overflow-wrap: break-word;
+}
+
+.text {
+  color: #fff;
+  margin: 0;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+
+.aside {
+  min-width: 0;
+}
+
+.card {
+  padding: $space-xl;
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-family: $font-heading;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: $color-accent;
+  margin: 0 0 $space-md;
+}
+
+.cardText {
+  font-size: 0.9rem;
+  color: $color-text-muted;
+  margin: 0;
+  line-height: 1.6;
+}
+.name{
+  color: #fff;
+  font-weight: bold;
+}

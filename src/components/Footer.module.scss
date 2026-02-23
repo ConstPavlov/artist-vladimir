@@ -1,0 +1,109 @@
+@use '../styles/variables' as *;
+
+.footer {
+  margin-top: auto;
+  background: $color-bg-elevated;
+  border-top: 1px solid $color-border;
+  border-radius: $radius-lg $radius-lg 0 0;
+  padding: $space-lg $space-md;
+  overflow-x: hidden;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+  box-sizing: border-box;
+}
+
+.copyright {
+  margin: 0;
+  font-size: 0.875rem;
+  color: $color-text-muted;
+  line-height: 1.4;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+  justify-content: center;
+
+  a {
+    font-size: 0.875rem;
+    color: $color-text-muted;
+    white-space: nowrap;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+}
+
+.contacts {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: $color-text-muted;
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.contactLink {
+  color: $color-text-muted;
+  text-decoration: none;
+  transition: color $transition;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.contactLinkWithIcon {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  color: $color-text-muted;
+  text-decoration: none;
+  transition: color $transition;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+.contactsSep {
+  opacity: 0.6;
+  margin: 0 0.15em;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: $space-xl $space-lg;
+  }
+
+  .inner {
+    flex-direction: column;
+    text-align: center;
+    gap: $space-lg;
+  }
+
+  .copyright {
+    order: 3;
+    font-size: 0.8125rem;
+  }
+
+  .links {
+    order: 1;
+    gap: $space-lg;
+  }
+
+  .contacts {
+    order: 2;
+    font-size: 0.75rem;
+    word-break: break-word;
+  }
+}

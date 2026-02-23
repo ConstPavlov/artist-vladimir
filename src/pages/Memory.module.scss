@@ -1,0 +1,57 @@
+@use '../styles/variables' as *;
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding-bottom: $space-3xl;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $space-2xl;
+  padding-bottom: $space-xl;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  font-family: $font-heading;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  color: $color-text;
+  margin: 0 0 $space-sm;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.content {
+  margin-top: $space-xl;
+}
+
+.quote {
+  margin-bottom: $space-2xl;
+  padding: $space-xl;
+  background: $color-bg-card;
+  border-left: 4px solid $color-accent;
+  border-radius: 0 $radius-md $radius-md 0;
+
+  blockquote {
+    margin: 0;
+    font-family: $font-heading;
+    font-size: 1.25rem;
+    font-weight: 500;
+    font-style: italic;
+    color: $color-text;
+    line-height: 1.6;
+  }
+}
+
+.text {
+  color: $color-text-muted;
+  margin: 0;
+  line-height: 1.7;
+}

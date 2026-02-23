@@ -1,0 +1,209 @@
+@use '../styles/variables' as *;
+
+.page {
+  min-height: 60vh;
+}
+
+.hero {
+  text-align: center;
+  padding: $space-3xl 0;
+  border-bottom: 1px solid $color-border;
+}
+
+// Кулон на цепочке: цепочка и фото — один блок в потоке
+$chain-color: $color-accent;
+$chain-z: 0;
+
+.authorPhotoWrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: $space-xl;
+  padding-top: 234px;
+}
+
+// Кольцо вверху блока, снизу стыкуется с путями цепочки
+.chainClasp {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border: 2px dotted $chain-color;
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+// SVG цепочки: начинается под кольцом, в потоке с кулоном
+.chainSvg {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 220px;
+  color: $chain-color;
+  z-index: 0;
+  pointer-events: none;
+}
+
+// Лёгкая анимация «оживания» пунктира — смещение штрихов
+.chainPathLeft,
+.chainPathRight {
+  animation: chain-dash 8s linear infinite;
+}
+
+.chainPathRight {
+  animation-delay: -4s;
+}
+
+@keyframes chain-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+// Фото поднимаем, чтобы круг перекрывал концы цепей (цепь уходит под кулон)
+.authorPhoto {
+  position: relative;
+  z-index: 1;
+  margin-top: -80px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid $color-accent;
+  box-shadow: 0 0 0 1px $color-border, 0 12px 32px rgba(0, 0, 0, 0.4);
+  transition: box-shadow $transition;
+
+  &:hover {
+    box-shadow: 0 0 0 2px $color-accent-light, 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.title {
+  font-family: $font-heading;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 600;
+  color: $color-text;
+  margin: 0 0 $space-md;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: $color-text-muted;
+  margin: 0 0 $space-2xl;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta {
+  display: flex;
+  gap: $space-md;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary {
+  display: inline-block;
+  padding: $space-md $space-xl;
+  background: $color-accent;
+  color: $color-bg !important;
+  font-weight: 600;
+  border-radius: $radius-md;
+  transition: background $transition, transform $transition;
+
+  &:hover {
+    background: $color-accent-light;
+    transform: translateY(-1px);
+  }
+}
+
+.ctaSecondary {
+  display: inline-block;
+  padding: $space-md $space-xl;
+  border: 1px solid $color-border;
+  color: $color-text !important;
+  font-weight: 500;
+  border-radius: $radius-md;
+  transition: border-color $transition, color $transition;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent !important;
+  }
+}
+
+.preview {
+  padding: $space-3xl 0;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: $space-2xl 0;
+  }
+
+  .preview {
+    padding: $space-xl 0;
+  }
+}
+
+.carouselSection {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: $space-lg;
+  width: 100%;
+}
+
+.sectionTitle {
+  font-family: $font-heading;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $color-text-muted;
+  margin: 0 0 $space-xl;
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: $space-lg;
+}
+
+.card {
+  display: block;
+  padding: $space-xl;
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  transition: border-color $transition, box-shadow $transition;
+
+  &:hover {
+    border-color: $color-accent-dark;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.cardLabel {
+  font-family: $font-heading;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: $color-accent;
+  display: block;
+  margin-bottom: $space-sm;
+}
+
+.cardDesc {
+  margin: 0;
+  font-size: 0.95rem;
+  color: $color-text-muted;
+}

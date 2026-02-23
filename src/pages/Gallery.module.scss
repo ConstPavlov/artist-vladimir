@@ -1,0 +1,231 @@
+@use '../styles/variables' as *;
+
+.page {
+  padding-bottom: $space-3xl;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: $space-2xl;
+  padding-bottom: $space-xl;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  font-family: $font-heading;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  color: $color-text;
+  margin: 0 0 $space-sm;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: $color-text-muted;
+  margin: 0 0 $space-xl;
+}
+
+.tabs {
+  display: inline-flex;
+  gap: 0;
+  background: $color-bg-card;
+  padding: $space-xs;
+  border-radius: $radius-md;
+  border: 1px solid $color-border;
+  position: relative;
+}
+
+// Плавно двигающийся фон активной вкладки
+.tabSlider {
+  position: absolute;
+  top: $space-xs;
+  left: $space-xs;
+  width: calc(50% - #{$space-xs * 2});
+  height: calc(100% - #{$space-xs * 2});
+  background: $color-accent;
+  border-radius: $radius-sm;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.tabSliderRight {
+  left: 50%;
+}
+
+.tab {
+  flex: 1;
+  min-width: 7rem;
+  display: inline-block;
+  padding: $space-sm $space-lg;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: $color-text-muted;
+  background: transparent;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+
+  &:hover {
+    color: $color-text;
+  }
+
+  &.tabActive {
+    color: $color-bg;
+  }
+}
+
+.section {
+  animation: fadeIn 0.3s ease;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sectionTitle {
+  font-family: $font-heading;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $color-accent;
+  margin: 0 0 $space-md;
+}
+
+.sectionDesc {
+  color: $color-text-muted;
+  margin: 0 0 $space-xl;
+  max-width: 560px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: $space-lg;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card {
+  aspect-ratio: 4 / 3;
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color $transition, box-shadow $transition, transform $transition;
+
+  &:hover {
+    border-color: $color-accent-dark;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transform: translateY(-2px);
+  }
+}
+
+.cardInner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    $color-bg-card 0%,
+    $color-border 40%,
+    $color-bg-card 50%,
+    $color-border 60%,
+    $color-bg-card 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  transition: opacity 0.25s ease;
+}
+
+.skeletonHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.card img.cardImgLoaded {
+  opacity: 1;
+}
+
+@keyframes skeleton-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: $space-xl;
+  animation: fadeIn 0.2s ease;
+
+  img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: $radius-md;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.lightboxClose {
+  position: absolute;
+  top: $space-lg;
+  right: $space-lg;
+  width: 44px;
+  height: 44px;
+  font-size: 2rem;
+  line-height: 1;
+  color: $color-text-muted;
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color $transition, border-color $transition;
+
+  &:hover {
+    color: $color-text;
+    border-color: $color-accent;
+  }
+}

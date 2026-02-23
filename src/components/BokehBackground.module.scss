@@ -1,0 +1,78 @@
+@use '../styles/variables' as *;
+
+// Bokeh — плывущие круги с чёткой фактурой и «шар в шаре»
+.wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: absolute;
+  left: var(--orb-x, 50%);
+  top: var(--orb-y, 50%);
+  width: var(--orb-size, 140px);
+  height: var(--orb-size, 140px);
+  margin-left: calc(var(--orb-size, 140px) / -2);
+  margin-top: calc(var(--orb-size, 140px) / -2);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(224, 201, 122, 0.5) 0%,
+    rgba(201, 169, 98, 0.35) 22%,
+    rgba(166, 139, 74, 0.18) 45%,
+    transparent 72%
+  );
+  filter: blur(14px);
+  animation: bokeh-float var(--orb-duration, 14s) var(--orb-delay, 0s) ease-in-out infinite;
+  will-change: transform;
+}
+
+// Внутренний «шар» — ярче и чуть чётче
+.orbInner {
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 40% 40%,
+    rgba(224, 201, 122, 0.55) 0%,
+    rgba(201, 169, 98, 0.25) 50%,
+    transparent 75%
+  );
+  filter: blur(6px);
+  animation: bokeh-float-inner var(--orb-duration, 14s) var(--orb-delay, 0s) ease-in-out infinite;
+}
+
+@keyframes bokeh-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  20% {
+    transform: translate(10%, -12%) scale(1.08);
+  }
+  40% {
+    transform: translate(-12%, 8%) scale(0.95);
+  }
+  60% {
+    transform: translate(8%, 12%) scale(1.05);
+  }
+  80% {
+    transform: translate(-8%, -6%) scale(0.98);
+  }
+}
+
+@keyframes bokeh-float-inner {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(5%, -8%) scale(1.1);
+  }
+  66% {
+    transform: translate(-6%, 5%) scale(0.92);
+  }
+}

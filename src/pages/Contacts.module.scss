@@ -1,0 +1,82 @@
+@use '../styles/variables' as *;
+
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding-bottom: $space-3xl;
+}
+
+.header {
+  margin-bottom: $space-2xl;
+  padding-bottom: $space-xl;
+  border-bottom: 1px solid $color-border;
+}
+
+.title {
+  font-family: $font-heading;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+  color: $color-text;
+  margin: 0 0 $space-sm;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.section {
+  margin: 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xl;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: $space-xs;
+}
+
+.label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.link {
+  font-size: 1.125rem;
+  color: $color-accent;
+  transition: color $transition;
+
+  &:hover {
+    color: $color-accent-light;
+  }
+}
+
+.linkWithIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-sm;
+  font-size: 1.125rem;
+  color: $color-accent;
+  transition: color $transition;
+
+  &:hover {
+    color: $color-accent-light;
+  }
+}
+
+.telegramIcon {
+  flex-shrink: 0;
+}
