@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Палитра: овал «деревянный» с отверстием для пальца -->
+  <path fill="#9B7A2E" stroke="#6B5320" stroke-width="0.7" d="M21 5c5 0 10 5 10 11s-4 11-10 11-10-5-10-11 4-11 10-11z"/>
+  <ellipse cx="17" cy="9" rx="3" ry="3.5" fill="#0d0d0f"/>
+  <!-- Кляксы красок -->
+  <circle cx="24" cy="11" r="2" fill="#C41E3A"/>
+  <circle cx="25" cy="17" r="1.8" fill="#FFD700"/>
+  <circle cx="22" cy="22" r="1.8" fill="#2563EB"/>
+  <circle cx="16" cy="23" r="1.5" fill="#16A34A"/>
+  <circle cx="19" cy="15" r="1.2" fill="#E8E6E3"/>
+  <!-- Кисть 1 (слева): ручка -->
+  <rect x="2" y="9" width="12" height="2.2" rx="0.5" fill="#5D4E37" stroke="#3d3528" stroke-width="0.4"/>
+  <!-- щетина кисти 1 -->
+  <path fill="#8B6914" d="M14 9.2l2.5 2.8v2.4L14 11.6V9.2z"/>
+  <!-- Кисть 2 (снизу): ручка под углом -->
+  <g transform="rotate(25 8 26)">
+    <rect x="2" y="23" width="12" height="2" rx="0.5" fill="#5D4E37" stroke="#3d3528" stroke-width="0.4"/>
+    <path fill="#A63D40" d="M14 23.5l2 2.2v2L14 25.5v-2z"/>
+  </g>
+</svg>
