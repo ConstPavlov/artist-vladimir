@@ -33,6 +33,7 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
 
     React.useEffect(() => {
       setApi?.(emblaApi)
+      return undefined
     }, [emblaApi, setApi])
 
     React.useEffect(() => {
@@ -43,7 +44,9 @@ const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
       }
       onSelect()
       emblaApi.on('select', onSelect)
-      return () => emblaApi.off('select', onSelect)
+      return () => {
+        emblaApi.off('select', onSelect)
+      }
     }, [emblaApi])
 
     const value = React.useMemo<CarouselContextValue>(
