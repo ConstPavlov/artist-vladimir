@@ -2,6 +2,7 @@ import { TelegramIcon } from '../components/TelegramIcon'
 import styles from './Contacts.module.scss'
 
 const TELEGRAM_URL = 'https://t.me/ioannmadeincccp'
+const SITE_AUTHOR_TELEGRAM = 'https://t.me/venividi_vichi'
 
 export default function Contacts() {
   return (
@@ -37,6 +38,19 @@ export default function Contacts() {
             >
               <TelegramIcon size={22} className={styles.telegramIcon} />
               @ioannmadeincccp
+            </a>
+          </li>
+          <li className={styles.item}>
+            <span className={styles.label}>Автор сайта</span>
+            <a
+              href={SITE_AUTHOR_TELEGRAM}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.linkWithIcon}
+              aria-label="Telegram автора сайта: @venividi_vichi"
+            >
+              <TelegramIcon size={22} className={styles.telegramIcon} />
+              t.me/venividi_vichi
             </a>
           </li>
         </ul>
