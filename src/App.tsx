@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import Gallery from './pages/Gallery'
@@ -12,7 +12,7 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/gallery" element={<Navigate to="/gallery/akvarel" replace />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/gallery/:section" element={<Gallery />} />
         <Route path="/about" element={<About />} />
         <Route path="/memory" element={<Memory />} />

@@ -1,0 +1,115 @@
+@use '../styles/variables' as *;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-lg;
+}
+
+.book {
+  position: relative;
+  width: min(100%, 520px);
+  aspect-ratio: 4 / 5;
+  perspective: 1400px;
+  background: linear-gradient(90deg, #5c4030 0 18px, #f4efe4 18px);
+  border-radius: 4px 12px 12px 4px;
+  box-shadow:
+    0 18px 40px rgba(40, 28, 16, 0.28),
+    inset 0 0 0 1px rgba(80, 60, 30, 0.2);
+  overflow: hidden;
+}
+
+.spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  background: linear-gradient(90deg, #3d2a1e, #6b4a34);
+  z-index: 3;
+}
+
+.page {
+  position: absolute;
+  left: 18px;
+  right: 14px;
+  top: 14px;
+  bottom: 14px;
+  background: #f7f2e8;
+  padding: 12px 12px 56px;
+  transform-origin: left center;
+  backface-visibility: hidden;
+}
+
+.pageBack {
+  z-index: 1;
+
+  img {
+    width: 100%;
+    height: calc(100% - 8px);
+    object-fit: cover;
+    filter: brightness(0.92);
+  }
+}
+
+.pageFront {
+  z-index: 2;
+  box-shadow: 8px 0 18px rgba(40, 28, 16, 0.12);
+  transition: transform 0.5s ease;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #ddd6c8;
+  }
+}
+
+.flipNext {
+  transform: rotateY(-90deg);
+}
+
+.flipPrev {
+  transform: rotateY(12deg);
+}
+
+.caption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  margin: 0;
+  font-family: $font-heading;
+  font-size: 1.05rem;
+  color: $color-text;
+  text-align: center;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+  align-items: center;
+  justify-content: center;
+  color: $color-text-muted;
+
+  button {
+    background: $color-bg-card;
+    border: 1px solid $color-border;
+    color: $color-text;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      border-color: $color-accent;
+      color: $color-accent;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: wait;
+    }
+  }
+}

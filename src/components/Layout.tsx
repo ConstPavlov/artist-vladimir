@@ -8,18 +8,11 @@ type LayoutProps = { children?: ReactNode }
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className={styles.layout}>
-      <div className={styles.bgBlobs} aria-hidden>
-        <span className={styles.blob} />
-        <span className={styles.blob} />
-        <span className={styles.blob} />
-        <span className={styles.blob} />
-        <span className={styles.blob} />
-      </div>
+      <div className={styles.paper} aria-hidden />
+      <div className={styles.paperWash} aria-hidden />
       <div className={styles.content}>
         <Header />
-        <main className={styles.main}>
-          {children}
-        </main>
+        <main className={styles.main}>{children}</main>
         <Footer />
       </div>
     </div>

@@ -1,7 +1,7 @@
 @use '../styles/variables' as *;
 
 .page {
-  max-width: 640px;
+  max-width: 860px;
   margin: 0 auto;
   padding-bottom: $space-3xl;
 }
@@ -28,30 +28,95 @@
   margin: 0;
 }
 
-.content {
-  margin-top: $space-xl;
+.block {
+  margin-bottom: $space-3xl;
 }
 
-.quote {
-  margin-bottom: $space-2xl;
-  padding: $space-xl;
-  background: $color-bg-card;
-  border-left: 4px solid $color-accent;
-  border-radius: 0 $radius-md $radius-md 0;
+.blockHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+  margin-bottom: $space-sm;
+}
 
-  blockquote {
-    margin: 0;
-    font-family: $font-heading;
-    font-size: 1.25rem;
-    font-weight: 500;
-    font-style: italic;
-    color: $color-text;
-    line-height: 1.6;
+.blockTitle {
+  font-family: $font-heading;
+  font-size: 1.6rem;
+  color: $color-accent;
+  margin: 0;
+}
+
+.lead {
+  color: $color-text-muted;
+  margin: 0 0 $space-xl;
+  line-height: 1.7;
+}
+
+.showBtn {
+  background: $color-accent;
+  color: #f7f2e8;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-accent-light;
   }
 }
 
-.text {
-  color: $color-text-muted;
-  margin: 0;
-  line-height: 1.7;
+.video {
+  width: 100%;
+  max-height: 70vh;
+  background: #1a1712;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+}
+
+.scans {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: $space-md;
+}
+
+.scan {
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  text-align: left;
+  color: $color-text;
+
+  img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  span {
+    display: block;
+    padding: 0.6rem 0.7rem;
+    font-size: 0.85rem;
+  }
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(20, 16, 12, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-xl;
+
+  img {
+    max-width: 100%;
+    max-height: 90vh;
+  }
 }

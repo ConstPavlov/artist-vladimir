@@ -1,22 +1,9 @@
+import { artworks } from '../data/media'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import styles from './ImageCarousel.module.scss'
 
-const BASE = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/')
-
-const GALLERY_IMAGES = [
-  `${BASE}assets/akvarel_files/a1.jpg`,
-  `${BASE}assets/akvarel_files/a2.jpeg`,
-  `${BASE}assets/akvarel_files/a3.jpeg`,
-  `${BASE}assets/akvarel_files/a4.jpeg`,
-  `${BASE}assets/akvarel_files/a5.jpeg`,
-  `${BASE}assets/gallary/pic1.webp`,
-  `${BASE}assets/gallary/pic2.webp`,
-  `${BASE}assets/gallary/pic3.webp`,
-  `${BASE}assets/gallary/pic4.webp`,
-  `${BASE}assets/gallary/pic5.webp`,
-  `${BASE}assets/gallary/pic6.webp`,
-]
+const PREVIEW = artworks.filter((_, i) => i % 7 === 0).slice(0, 12)
 
 export function ImageCarousel() {
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -47,7 +34,6 @@ export function ImageCarousel() {
     return () => ro.disconnect()
   }, [emblaApi])
 
-  // Автопрокрутка раз в 5 секунд
   useEffect(() => {
     if (!emblaApi) return
     const interval = setInterval(() => emblaApi.scrollNext(), 5000)
@@ -76,12 +62,12 @@ export function ImageCarousel() {
       </button>
       <div className={styles.viewport} ref={emblaRef}>
         <div className={styles.content}>
-          {GALLERY_IMAGES.map((src, index) => (
-            <div key={src} className={styles.item}>
+          {PREVIEW.map((work) => (
+            <div key={work.id} className={styles.item}>
               <div className={styles.slide}>
                 <img
-                  src={src}
-                  alt={`Работа ${index + 1}`}
+                  src={work.src}
+                  alt={work.caption}
                   className={styles.slideImg}
                   loading="lazy"
                 />

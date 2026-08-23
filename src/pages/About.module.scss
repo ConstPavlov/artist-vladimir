@@ -92,8 +92,8 @@
 }
 
 .text {
-  color: #fff;
-  margin: 0;
+  color: $color-text;
+  margin: 0 0 $space-lg;
   line-height: 1.7;
   overflow-wrap: break-word;
 }
@@ -125,6 +125,6 @@
   line-height: 1.6;
 }
 .name{
-  color: #fff;
+  color: $color-text;
   font-weight: bold;
 }

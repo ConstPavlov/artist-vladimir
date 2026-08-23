@@ -26,67 +26,60 @@
   margin: 0 0 $space-xl;
 }
 
-.tabs {
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md;
+  justify-content: center;
+  align-items: center;
+}
+
+.filters {
   display: inline-flex;
-  gap: 0;
+  flex-wrap: wrap;
+  gap: $space-xs;
   background: $color-bg-card;
   padding: $space-xs;
   border-radius: $radius-md;
   border: 1px solid $color-border;
-  position: relative;
 }
 
-// Плавно двигающийся фон активной вкладки
-.tabSlider {
-  position: absolute;
-  top: $space-xs;
-  left: $space-xs;
-  width: calc(50% - #{$space-xs * 2});
-  height: calc(100% - #{$space-xs * 2});
-  background: $color-accent;
-  border-radius: $radius-sm;
-  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
-
-.tabSliderRight {
-  left: 50%;
-}
-
-.tab {
-  flex: 1;
-  min-width: 7rem;
-  display: inline-block;
-  padding: $space-sm $space-lg;
-  font-size: 0.95rem;
-  font-weight: 500;
-  font-family: inherit;
-  color: $color-text-muted;
-  background: transparent;
+.filter {
   border: none;
+  background: transparent;
+  color: $color-text-muted;
+  padding: $space-sm $space-md;
   border-radius: $radius-sm;
   cursor: pointer;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  position: relative;
-  z-index: 1;
-  text-align: center;
+  font-size: 0.95rem;
 
   &:hover {
     color: $color-text;
   }
+}
 
-  &.tabActive {
-    color: $color-bg;
+.filterActive {
+  background: $color-accent;
+  color: #f7f2e8;
+}
+
+.slideshowBtn {
+  background: $color-accent;
+  color: #f7f2e8;
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-accent-light;
   }
 }
 
 .section {
   animation: fadeIn 0.3s ease;
-
-  &[hidden] {
-    display: none;
-  }
+  margin-bottom: $space-3xl;
 }
 
 @keyframes fadeIn {
@@ -121,18 +114,21 @@
 }
 
 .card {
-  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
   background: $color-bg-card;
   border: 1px solid $color-border;
   border-radius: $radius-md;
   padding: 0;
   cursor: pointer;
   overflow: hidden;
+  text-align: left;
+  color: inherit;
   transition: border-color $transition, box-shadow $transition, transform $transition;
 
   &:hover {
     border-color: $color-accent-dark;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 24px rgba(60, 45, 25, 0.18);
     transform: translateY(-2px);
   }
 }
@@ -141,7 +137,16 @@
   position: relative;
   display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.caption {
+  display: block;
+  padding: 0.7rem 0.85rem 0.9rem;
+  font-family: $font-heading;
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: $color-text;
 }
 
 .skeleton {
@@ -192,21 +197,49 @@
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(20, 16, 12, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: $space-xl;
   animation: fadeIn 0.2s ease;
+}
+
+.lightboxFigure {
+  margin: 0;
+  max-width: min(92vw, 1100px);
+  text-align: center;
 
   img {
     max-width: 100%;
-    max-height: 90vh;
+    max-height: 78vh;
     object-fit: contain;
     border-radius: $radius-md;
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
   }
+
+  figcaption {
+    margin-top: $space-md;
+    color: #f3ead8;
+    font-family: $font-heading;
+    font-size: 1.15rem;
+  }
+}
+
+.lightboxNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
 }
 
 .lightboxClose {

@@ -20,6 +20,10 @@ body {
   line-height: 1.6;
   color: $color-text;
   background-color: $color-bg;
+  background-image: url('/media/texture/textura-akvarel.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -44,4 +48,8 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+button {
+  font-family: inherit;
 }

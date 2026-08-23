@@ -13,9 +13,6 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
-        <NavLink to="/" className={styles.logo}>
-          Галерея
-        </NavLink>
         <nav className={styles.nav}>
           {navItems.map(({ to, label }) => (
             <NavLink

@@ -16,25 +16,14 @@
   padding: $space-md $space-lg;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: $space-xl;
-}
-
-.logo {
-  font-family: $font-heading;
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: $color-text !important;
-
-  &:hover {
-    color: $color-accent !important;
-  }
 }
 
 .nav {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $space-sm;
   flex-wrap: wrap;
 }
@@ -49,7 +38,7 @@
 
   &:hover {
     color: $color-text !important;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(110, 82, 36, 0.08);
   }
 
   &.linkActive {

@@ -1,52 +1,31 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
-import { Link, useParams, Navigate } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react'
+import { useParams } from 'react-router-dom'
+import { Slideshow } from '../components/Slideshow'
+import { artworks, WORK_GROUPS, type Artwork } from '../data/media'
 import styles from './Gallery.module.scss'
 
-type Section = 'акварель' | 'масло'
+type TechniqueFilter = 'все' | 'акварель' | 'масло' | 'пастель'
 
-const BASE = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/')
-
-const AKVAREL_FILES = [
-  'a1.jpg', 'a2.jpeg', 'a3.jpeg', 'a4.jpeg', 'a5.jpeg', 'a6.jpeg', 'a7.jpeg', 'a8.jpeg', 'a9.jpeg',
-  'a10.jpeg', 'a11.webp', 'a12.webp', 'a13.jpeg', 'a14.webp', 'a15.jpeg', 'a16.webp', 'a17.webp', 'a18.webp', 'a19.jpeg',
-  'a20.webp', 'a21.jpeg', 'a22.webp', 'a23.jpeg', 'a24.jpeg', 'a25.webp', 'a26.webp', 'a27.jpg', 'a28.webp', 'a29.jpeg',
-  'a30.webp', 'a31.jpeg', 'a32.webp', 'a33.webp', 'a34.jpeg', 'a35.webp', 'a36.jpeg',
-]
-
-// Акварель — все 36 фото из assets/akvarel_files
-const AKVAREL_IMAGES = AKVAREL_FILES.map((name) => `${BASE}assets/akvarel_files/${name}`)
-
-// Масло — assets/gallary
-const GALLARY_IMAGES = [
-  `${BASE}assets/gallary/pic1.webp`,
-  `${BASE}assets/gallary/pic2.webp`,
-  `${BASE}assets/gallary/pic3.webp`,
-  `${BASE}assets/gallary/pic4.webp`,
-  `${BASE}assets/gallary/pic5.webp`,
-  `${BASE}assets/gallary/pic6.webp`,
-]
-
-const SECTION_MAP: Record<string, Section> = {
-  akvarel: 'акварель',
-  maslo: 'масло',
+function matchesTechnique(work: Artwork, filter: TechniqueFilter) {
+  if (filter === 'все') return true
+  if (filter === 'акварель') return work.technique.includes('акварель')
+  if (filter === 'масло') return work.technique === 'масло'
+  if (filter === 'пастель') return work.technique === 'пастель'
+  return true
 }
 
-// Загрузка изображения только когда карточка попадает в зону видимости (не полагаемся на большой порог loading="lazy")
 function LazyGalleryCard({
-  src,
-  alt,
+  work,
   onLoad,
   isLoaded,
   onClick,
-  ariaLabel,
 }: {
-  src: string
-  alt: string
+  work: Artwork
   onLoad: (src: string) => void
   isLoaded: boolean
   onClick: () => void
-  ariaLabel: string
-} & { key?: string }) {
+  key?: string
+}) {
   const wrapperRef = useRef<HTMLSpanElement>(null)
   const [inView, setInView] = useState(false)
 
@@ -64,41 +43,70 @@ function LazyGalleryCard({
   }, [])
 
   return (
-    <button
-      type="button"
-      className={styles.card}
-      onClick={onClick}
-      aria-label={ariaLabel}
-    >
+    <button type="button" className={styles.card} onClick={onClick} aria-label={work.caption}>
       <span ref={wrapperRef} className={styles.cardInner}>
         <span
           className={[styles.skeleton, isLoaded && styles.skeletonHidden].filter(Boolean).join(' ')}
           aria-hidden
         />
         <img
-          src={inView ? src : undefined}
-          alt={alt}
+          src={inView ? work.src : undefined}
+          alt={work.title}
           decoding="async"
           className={isLoaded ? styles.cardImgLoaded : ''}
-          onLoad={inView ? () => onLoad(src) : undefined}
+          onLoad={inView ? () => onLoad(work.src) : undefined}
         />
       </span>
+      <span className={styles.caption}>{work.caption}</span>
     </button>
   )
 }
 
 export default function Gallery() {
   const { section: sectionParam } = useParams<{ section: string }>()
-  const section: Section = sectionParam && SECTION_MAP[sectionParam] ? SECTION_MAP[sectionParam] : 'акварель'
-  const [lightbox, setLightbox] = useState<string | null>(null)
+  const initialFilter: TechniqueFilter =
+    sectionParam === 'maslo' ? 'масло' : sectionParam === 'akvarel' ? 'акварель' : 'все'
+
+  const [technique, setTechnique] = useState<TechniqueFilter>(initialFilter)
+  const [lightbox, setLightbox] = useState<number | null>(null)
+  const [show, setShow] = useState(false)
   const [loadedImages, setLoadedImages] = useState<Set<string>>(() => new Set())
 
   const handleImageLoad = useCallback((src: string) => {
     setLoadedImages((prev) => new Set(prev).add(src))
   }, [])
 
-  if (sectionParam && !SECTION_MAP[sectionParam]) {
-    return <Navigate to="/gallery/akvarel" replace />
+  const filtered = useMemo(
+    () => artworks.filter((w) => matchesTechnique(w, technique)),
+    [technique]
+  )
+
+  const grouped = useMemo(
+    () =>
+      WORK_GROUPS.map((group) => ({
+        ...group,
+        items: filtered.filter((w) => w.group === group.id),
+      })).filter((g) => g.items.length > 0),
+    [filtered]
+  )
+
+  const slides = filtered.map((w) => ({ src: w.src, caption: w.caption }))
+
+  useEffect(() => {
+    if (lightbox === null) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightbox(null)
+      if (e.key === 'ArrowRight') setLightbox((i) => (i === null ? i : (i + 1) % filtered.length))
+      if (e.key === 'ArrowLeft')
+        setLightbox((i) => (i === null ? i : (i - 1 + filtered.length) % filtered.length))
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightbox, filtered.length])
+
+  const openWork = (work: Artwork) => {
+    const i = filtered.findIndex((w) => w.id === work.id)
+    setLightbox(i >= 0 ? i : 0)
   }
 
   return (
@@ -106,95 +114,54 @@ export default function Gallery() {
       <header className={styles.header}>
         <h1 className={styles.title}>Галерея</h1>
         <p className={styles.subtitle}>
-          Акварель и масло — две грани творчества
+          Картины сгруппированы по темам. Подпись под работой — по названию файла.
         </p>
-        <nav className={styles.tabs} role="tablist">
-          <span
-            className={[styles.tabSlider, section === 'масло' && styles.tabSliderRight].filter(Boolean).join(' ')}
-            aria-hidden
-          />
-          <Link
-            to="/gallery/akvarel"
-            role="tab"
-            aria-selected={section === 'акварель'}
-            aria-controls="акварель"
-            id="tab-акварель"
-            className={[styles.tab, section === 'акварель' && styles.tabActive].filter(Boolean).join(' ')}
-          >
-            Акварель
-          </Link>
-          <Link
-            to="/gallery/maslo"
-            role="tab"
-            aria-selected={section === 'масло'}
-            aria-controls="масло"
-            id="tab-масло"
-            className={[styles.tab, section === 'масло' && styles.tabActive].filter(Boolean).join(' ')}
-          >
-            Масло
-          </Link>
-        </nav>
+        <div className={styles.toolbar}>
+          <nav className={styles.filters} aria-label="Техника">
+            {(['все', 'акварель', 'масло', 'пастель'] as TechniqueFilter[]).map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={[styles.filter, technique === item && styles.filterActive]
+                  .filter(Boolean)
+                  .join(' ')}
+                onClick={() => setTechnique(item)}
+              >
+                {item[0].toUpperCase() + item.slice(1)}
+              </button>
+            ))}
+          </nav>
+          <button type="button" className={styles.slideshowBtn} onClick={() => setShow(true)}>
+            Слайд-шоу
+          </button>
+        </div>
       </header>
 
-      <section
-        id="акварель"
-        role="tabpanel"
-        aria-labelledby="tab-акварель"
-        hidden={section !== 'акварель'}
-        className={styles.section}
-      >
-        <h2 className={styles.sectionTitle}>Акварель</h2>
-        <p className={styles.sectionDesc}>
-          Здесь размещены работы в технике акварели. Свет и прозрачность — отличительные черты этого раздела.
-        </p>
-        <div className={styles.grid}>
-          {AKVAREL_IMAGES.map((src, i) => (
-            <LazyGalleryCard
-              key={src}
-              src={src}
-              alt={`Акварель ${i + 1}`}
-              onLoad={handleImageLoad}
-              isLoaded={loadedImages.has(src)}
-              onClick={() => setLightbox(src)}
-              ariaLabel={`Работа ${i + 1}`}
-            />
-          ))}
-        </div>
-      </section>
+      {grouped.map((group) => (
+        <section key={group.id} className={styles.section} id={group.id}>
+          <h2 className={styles.sectionTitle}>{group.title}</h2>
+          <p className={styles.sectionDesc}>{group.description}</p>
+          <div className={styles.grid}>
+            {group.items.map((work) => (
+              <LazyGalleryCard
+                key={work.id}
+                work={work}
+                onLoad={handleImageLoad}
+                isLoaded={loadedImages.has(work.src)}
+                onClick={() => openWork(work)}
+              />
+            ))}
+          </div>
+        </section>
+      ))}
 
-      <section
-        id="масло"
-        role="tabpanel"
-        aria-labelledby="tab-масло"
-        hidden={section !== 'масло'}
-        className={styles.section}
-      >
-        <h2 className={styles.sectionTitle}>Масло</h2>
-        <p className={styles.sectionDesc}>
-          Картины маслом — глубина цвета и фактура. В этом разделе собраны работы, написанные масляными красками.
-        </p>
-        <div className={styles.grid}>
-          {GALLARY_IMAGES.map((src, i) => (
-            <LazyGalleryCard
-              key={src}
-              src={src}
-              alt={`Масло ${i + 1}`}
-              onLoad={handleImageLoad}
-              isLoaded={loadedImages.has(src)}
-              onClick={() => setLightbox(src)}
-              ariaLabel={`Работа ${i + 1}`}
-            />
-          ))}
-        </div>
-      </section>
-
-      {lightbox && (
+      {lightbox !== null && filtered[lightbox] && (
         <div
           className={styles.lightbox}
           onClick={() => setLightbox(null)}
           role="dialog"
           aria-modal="true"
-          aria-label="Увеличить изображение"
+          aria-label="Просмотр картины"
         >
           <button
             type="button"
@@ -204,9 +171,38 @@ export default function Gallery() {
           >
             ×
           </button>
-          <img src={lightbox} alt="" onClick={(e: React.MouseEvent) => e.stopPropagation()} />
+          <button
+            type="button"
+            className={styles.lightboxNav}
+            style={{ left: '1rem' }}
+            onClick={(e: MouseEvent) => {
+              e.stopPropagation()
+              setLightbox((i) => (i === null ? i : (i - 1 + filtered.length) % filtered.length))
+            }}
+            aria-label="Предыдущая"
+          >
+            ‹
+          </button>
+          <figure className={styles.lightboxFigure} onClick={(e: MouseEvent) => e.stopPropagation()}>
+            <img src={filtered[lightbox].src} alt={filtered[lightbox].title} />
+            <figcaption>{filtered[lightbox].caption}</figcaption>
+          </figure>
+          <button
+            type="button"
+            className={styles.lightboxNav}
+            style={{ right: '1rem' }}
+            onClick={(e: MouseEvent) => {
+              e.stopPropagation()
+              setLightbox((i) => (i === null ? i : (i + 1) % filtered.length))
+            }}
+            aria-label="Следующая"
+          >
+            ›
+          </button>
         </div>
       )}
+
+      <Slideshow slides={slides} open={show} onClose={() => setShow(false)} music />
     </div>
   )
 }
