@@ -1093,3 +1093,6 @@ export const publications: { src: string; caption: string; title: string }[] = [
 
 export const FILM_STRIP_SRC = '/media/home/plenka.jpg'
 export const PAPER_TEXTURE_SRC = '/media/texture/textura-akvarel.jpg'
+export const SLIDESHOW_MUSIC_SRC = encodeURI(
+  '/media/artist/Claude_Debussy.mp3'
+)
