@@ -22,23 +22,32 @@ export default function Memory() {
             Слайд-шоу
           </button>
         </div>
+
         <p className={styles.lead}>
           Листайте страницы, как в бумажном альбоме, или запустите слайд-шоу с музыкой.
         </p>
+
         <PhotoAlbum photos={memoryPhotos} />
       </section>
 
       {memoryVideos.map((video) => (
         <section key={video.src} className={styles.block}>
           <h2 className={styles.blockTitle}>{video.title || 'Выставка'}</h2>
-          <video className={styles.video} controls preload="metadata" src={video.src}>
-            Ваш браузер не воспроизводит видео.
-          </video>
+
+          <a
+            href={video.src}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.video}
+          >
+            Смотреть видео
+          </a>
         </section>
       ))}
 
       <section className={styles.block}>
         <h2 className={styles.blockTitle}>Публикации</h2>
+
         {publications.length === 0 ? (
           <p className={styles.lead}>
             Сканы газетных и журнальных публикаций появятся в этом разделе, когда их добавят к
@@ -69,8 +78,17 @@ export default function Memory() {
       />
 
       {scan && (
-        <div className={styles.lightbox} onClick={() => setScan(null)} role="dialog" aria-modal>
-          <img src={scan} alt="" onClick={(e: MouseEvent) => e.stopPropagation()} />
+        <div
+          className={styles.lightbox}
+          onClick={() => setScan(null)}
+          role="dialog"
+          aria-modal
+        >
+          <img
+            src={scan}
+            alt=""
+            onClick={(e: MouseEvent) => e.stopPropagation()}
+          />
         </div>
       )}
     </div>

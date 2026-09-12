@@ -1083,10 +1083,10 @@ export const memoryPhotos: MemoryPhoto[] = [
 
 export const memoryVideos = [
   {
-    "src": "/media/artist/exhibition.mp4",
-    "caption": "Выставка",
-    "title": "Выставка"
-  }
+    src: 'https://videovssylku.ru/v/exhibition.ilKP2',
+    caption: 'Выставка',
+    title: 'Выставка',
+  },
 ]
 
 export const publications: { src: string; caption: string; title: string }[] = []
